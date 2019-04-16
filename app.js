@@ -5,7 +5,7 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { observable } from 'mobx'
 import { observer, Provider } from 'mobx-react'
 
-import SplitPane from 'react-split-pane'
+import SplitPane from './react-split/SplitPane'
 
 const GlobalStyle = createGlobalStyle`
 
@@ -100,7 +100,12 @@ export default class App extends Component {
       <>
         <GlobalStyle />
         <SplitPane primary="first" split="vertical" minSize={100} maxize={100} defaultSize={100} allowResize={true}>
-          <div style={{ background: 'yellow', height: '100%' }}></div>
+          <div style={{ background: 'yellow', height: '100%' }}>
+            <SplitPane primary="first" split="horizontal" minSize="144px" maxize={100} defaultSize="144px">
+              <div style={{ background: 'orange', height: '100%' }}></div>
+              <div style={{ background: 'green', height: '100%' }}></div>
+            </SplitPane>
+          </div>
           <div style={{ background: 'magenta', height: '100%' }}></div>
         </SplitPane>
       </>
