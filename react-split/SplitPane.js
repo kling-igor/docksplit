@@ -35,6 +35,7 @@ function convert(str, size) {
   const tokens = str.match(/([0-9]+)([px|%]*)/);
   const value = tokens[1];
   const unit = tokens[2];
+
   return toPx(value, unit, size);
 }
 
@@ -50,7 +51,7 @@ function toPx(value, unit = 'px', size) {
 }
 
 function removeNullChildren(children) {
-  return React.Children.toArray(children).filter(c => c);
+  return React.Children.toArray(children).filter(c => !!c);
 }
 
 export function getUnit(size) {
@@ -97,6 +98,8 @@ function convertToUnit(size, unit, containerSize) {
 class SplitPane extends Component {
   constructor(props) {
     super(props);
+
+    this.splitPane = React.createRef();
 
     this.state = {
       sizes: this.getPanePropSize(props)
@@ -159,7 +162,6 @@ class SplitPane extends Component {
 
   onMouseMove = (event) => {
     event.preventDefault();
-
     this.onMove(event.clientX, event.clientY);
   }
 
@@ -189,7 +191,7 @@ class SplitPane extends Component {
   getDimensionsSnapshot(props) {
     const split = props.split;
     const paneDimensions = this.getPaneDimensions();
-    const splitPaneDimensions = this.splitPane.getBoundingClientRect();
+    const splitPaneDimensions = this.splitPane.current.getBoundingClientRect();
     const minSizes = this.getPanePropMinMaxSize(props, 'minSize');
     const maxSizes = this.getPanePropMinMaxSize(props, 'maxSize');
 
@@ -209,7 +211,7 @@ class SplitPane extends Component {
       minSizesPx,
       maxSizesPx,
       sizesPx
-    };
+    }
   }
 
   getPanePropSize(props) {
@@ -299,6 +301,7 @@ class SplitPane extends Component {
     sizesPx[resizerIndex + 1] = secondarySizePx;
 
     let sizes = this.getSizes().concat();
+
     let updateRatio;
 
     [primarySizePx, secondarySizePx].forEach((paneSize, idx) => {
@@ -345,7 +348,7 @@ class SplitPane extends Component {
   }
 
   getResizersSize(children) {
-    return (children.length - 1) * this.props.resizerSize;
+    return (children.length - 1) * (this.props.resizerSize || 1);
   }
 
   render() {
@@ -398,9 +401,7 @@ class SplitPane extends Component {
         className={className}
         data-type='SplitPane'
         data-split={split}
-        ref={el => {
-          this.splitPane = el;
-        }}
+        ref={this.splitPane}
       >
         {elements}
       </StyleComponent>
