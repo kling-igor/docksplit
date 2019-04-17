@@ -9,6 +9,7 @@ const Wrapper = styled.div`
   background-clip: padding-box;
 
   :hover {
+    opacity: 0.5;
     transition: all 2s ease;
   }
 `;
@@ -21,10 +22,10 @@ const HorizontalWrapper = styled(Wrapper)`
   cursor: row-resize;
   width: 100%;
 
-  :hover {
+  /* :hover {
     border-top: 5px solid rgba(0, 0, 0, 0.5);
     border-bottom: 5px solid rgba(0, 0, 0, 0.5);
-  }
+  } */
 
   .disabled {
     cursor: not-allowed;
@@ -41,10 +42,10 @@ const VerticalWrapper = styled(Wrapper)`
   border-right: 5px solid rgba(255, 255, 255, 0);
   cursor: col-resize;
 
-  :hover {
+  /* :hover {
     border-left: 5px solid rgba(0, 0, 0, 0.5);
     border-right: 5px solid rgba(0, 0, 0, 0.5);
-  }
+  } */
   .disabled {
     cursor: not-allowed;
   }

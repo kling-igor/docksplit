@@ -398,7 +398,7 @@ class SplitPane extends Component {
         className={className}
         data-type='SplitPane'
         data-split={split}
-        innerRef={el => {
+        ref={el => {
           this.splitPane = el;
         }}
       >
